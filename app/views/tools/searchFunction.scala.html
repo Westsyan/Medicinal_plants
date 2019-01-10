@@ -1,0 +1,128 @@
+@home.main("Genome Putative Function Search Tool"){
+
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <h2 class="page-heading">Genome Putative Function Search Tool</h2>
+    </div>
+  </div>
+
+  <form class="registration-form form-horizontal" id="conditionForm"
+  style="margin: 20px;">
+
+    <div class="form-group" style="margin-top: 10px">
+      <label class="control-label col-sm-2 col-sm-offset-1">Select annotation:</label>
+      <div class="col-sm-6">
+        <select class="form-control" name="species">
+          <option selected value="gansi">Ganoderma sinense</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="form-group" style="margin-top: 15px">
+      <label class="control-label col-sm-2 col-sm-offset-1">Search text:</label>
+      <div class="col-sm-6">
+        <textarea class="form-control blast-text" name="text" rows="5" id="text"></textarea>
+        <span class="help-block">e.g.,&nbsp;<a href="#"><em id="egText">
+          carcinoma</em></a></span>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top: 35px">
+      <div class="actions col-sm-offset-3 col-sm-3">
+        <button type="button" id="analyse"
+        class="btn btn-primary" onclick="functionSearch()" style="width: 80%;
+          margin-top: 5px">Search</button>
+      </div>
+      <div class="actions col-sm-3" style="text-align: right">
+        <button type="button" class="btn btn-primary" id="reset" style="width: 80%;
+          margin-top: 5px">Reset</button>
+        <button type="reset" style="display: none" id="r"></button>
+      </div>
+    </div>
+  </form>
+
+
+  <div id="result" style="display: none">
+    <hr>
+
+    <div id="toolbar">
+        &nbsp;Keyword：
+    </div>
+
+    <table class="display table table-bordered" id="table" data-pagination="true" data-search="true"
+    data-toolbar="#toolbar" data-page-list="[10, 25, 50, 100, all]" data-search-align="left" data-multiple-search="true"
+    style="table-layout: fixed;
+      word-wrap: break-word"
+    >
+      <thead>
+        <tr>
+          <th data-field='geneid' data-sortable='true'>Gene ID</th>
+          <th data-field='function' data-sortable='true'>Function</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <script>
+          $(function () {
+
+            $('#egText').click(function () {
+              var eg = $("#egText").text().trim();
+              $('#text').val(eg);
+              $("#conditionForm").formValidation("revalidateField", "text")
+            });
+
+            formValidation()
+
+          });
+
+          function formValidation() {
+            $('#conditionForm').formValidation({
+              framework: 'bootstrap',
+              icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+              },
+              fields: {
+                text: {
+                  validators: {
+                    notEmpty: {
+                      message: 'Text is required！'
+                    }
+                  }
+                }
+              }
+            });
+          }
+
+          function functionSearch() {
+            var form = $("#conditionForm")
+            var fv = form.data("formValidation");
+            fv.validate();
+            if (fv.isValid()) {
+              var index = layer.load(1, {
+                shade: [0.1, '#fff']
+              });
+              $("#search").attr("disabled", true).html("Search...");
+              $.ajax({
+                url: "@routes.ToolsController.searchFunction()",
+                type: "post",
+                data: $("#conditionForm").serialize(),
+                success: function (data) {
+                  $('#table').bootstrapTable({data:data});
+                  $("#search").attr("disabled", false).html("Search").blur();
+                  layer.close(index);
+                  $("#result").show()
+                }
+              });
+            }
+          }
+
+
+  </script>
+
+
+
+}

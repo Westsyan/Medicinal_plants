@@ -1,0 +1,48 @@
+@home.main("Download") {
+
+    <style type="text/css">
+            #download li{
+                list-style-type: disc ;
+            }
+
+    </style>
+
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">Download</h2>
+        </div>
+    </div>
+
+    <div class="panel-body" style="margin-left: 50px" id="download">
+        <h4>Download Ganoderma sinense profiles</h4>
+        <ul id="gansiUrl">
+        </ul>
+
+@*
+        <h4>Download Catharanthus roseus profiles</h4>
+        <ul id="roseusUrl">
+        </ul>
+*@
+
+
+    </div>
+    <script>
+            $(document).ready(function () {
+                var gansiArray = ["gasi_genome_SCF_v1.6.fasta.gz","geneModels_gansi_v1_6_features.genemodels.gff.gz",
+                "annotation_SP-KE-CO-Nr-IP-PF.xls.gz"];
+             //   var roseusArray = ["Lachesis_assembly.fasta.gz","EVM.final.gene.gff3.gz","Integrated_Function.annotation.xls.gz"];
+
+                $.each(gansiArray, function (i, v) {
+                    var html = "<li><a href = '/medicinalPlants/download/download?name=" + v + "&species=gansi' >" + v + "</a></li>";
+                    $("#gansiUrl").append(html)
+                });
+
+ /*               $.each(roseusArray, function (i, v) {
+                    var html = "<li><a href = '/medicinalPlants/download/download?name=" + v  + "&species=roseus'>" + v + "</a></li>";
+                    $("#roseusUrl").append(html)
+                });*/
+
+            })
+
+    </script>
+}

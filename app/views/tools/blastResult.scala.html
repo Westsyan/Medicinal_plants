@@ -1,0 +1,23 @@
+@(path: String)
+
+<script src="@routes.Assets.at("bootstrap/js/jquery-3.1.1.min.js")" type="text/javascript"></script>
+
+<div id="resultContent">
+
+</div>
+
+<script>
+
+        $(function () {
+
+            $.ajax({
+                url: "/medicinalPlants/tools/blastResult?path=@path",
+                type: "post",
+                success: function (data) {
+                    $("#resultContent").html(data.html);
+                }
+            })
+
+        })
+
+</script>

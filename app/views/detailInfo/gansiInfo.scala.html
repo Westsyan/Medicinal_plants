@@ -1,0 +1,217 @@
+@import models.Tables.GansiRow
+@(row:GansiRow)
+@home.main("Detail info"){
+
+  <style>
+          th {
+            width: 20%;
+          }
+
+          .myBold {
+          }
+
+          .myTd {
+            max-height: 150px;
+            overflow: auto;
+            padding-right: 25px;
+          }
+          .js-plotly-plot .plotly .cursor-crosshair {
+            cursor: default;
+          }
+
+  </style>
+  <div class="row">
+    <div class="form-group col-sm-12">
+      <h2 class="page-heading">Detail info</h2>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" id="gs" role="tab">
+      <h4 class="panel-title myBold"><a aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne" class="">
+        Basic</a></h4>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse in" id="collapseOne" role="tabpanel" aria-expanded="true" style="">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered" style="table-layout: fixed;
+            word-wrap: break-word">
+            <tbody>
+              <tr>
+                <th>GeneID</th>
+                <td>
+                @row.geneid
+                </td>
+              </tr>
+
+              <tr>
+                <th>Species Name</th>
+                <td>
+                  Ganoderma sinense
+                </td>
+              </tr>
+              <tr>
+                <th>Chromosome</th>
+                <td>
+                @row.chr
+                </td>
+              </tr>
+              <tr>
+                <th>Strand</th>
+                <td>
+                @row.strand
+                </td>
+              </tr>
+              <tr>
+                <th>Length</th>
+                <td>
+                @row.length
+                </td>
+              </tr>
+              <tr>
+                <th>Start</th>
+                <td>
+                @row.start
+                </td>
+              </tr>
+              <tr>
+                <th>End</th>
+                <td>
+                @row.end
+                </td>
+              </tr>
+              <tr>
+                <th>Gene Browse</th>
+                <td>
+                  <a href="http://210.22.121.250:20795/jb/index.html?data=my_data/gansi/data&loc=@row.chr:@row.start..@row.end" target="_blank">
+                    @row.chr:@row.start..@row.end
+                  </a>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" id="gs" role="tab">
+      <h4 class="panel-title myBold"><a aria-controls="collapse2" aria-expanded="true" data-toggle="collapse" href="#collapse2" class="">
+        Function</a></h4>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse in" id="collapse2" role="tabpanel" aria-expanded="true" style="">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered" style="table-layout: fixed;
+            word-wrap: break-word">
+            <tbody>
+              <tr>
+                <th>Swissprot hits</th>
+                <td>
+                @row.swissprot
+                </td>
+              </tr>
+              <tr>
+                <th>KEGG metabolic pathways</th>
+                <td>
+                @row.kegg
+                </td>
+              </tr>
+              <tr>
+                <th>COG families</th>
+                <td>
+                @row.cog
+                </td>
+              </tr>
+              <tr>
+                <th>Nr hits</th>
+                <td>
+                @row.nr
+                </td>
+              </tr>
+              <tr>
+                <th>Pfam domains</th>
+                <td>
+                @row.pfam
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" id="gs" role="tab">
+      <h4 class="panel-title myBold"><a aria-controls="collapse2" aria-expanded="true" data-toggle="collapse" href="#collapse3" class="">
+        Sequence</a></h4>
+    </div>
+    <div aria-labelledby="headingOne" class="panel-collapse collapse in" id="collapse3" role="tabpanel" aria-expanded="true" style="">
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered" style="table-layout: fixed;
+            word-wrap: break-word">
+            <tbody>
+              <tr>
+                <th>Cds
+                  <button class="btn-link" onclick="downloadCds()"><i class="fa fa-download"></i></button>
+                </th>
+                <td class="monospace">
+                  <div class="seq">
+                    >@row.geneid<br>
+                    <div id="cds">
+                    @row.cds.trim
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+              <tr>
+                <th>Pep
+                  <button class="btn-link" onclick="downloadPep()"><i class="fa fa-download"></i></button>
+                </th>
+                <td class="monospace">
+                  <div class="seq">
+                    >@row.geneid<br>
+                    <div id="pep">
+                    @row.pep
+                    </div>
+                  </div>
+
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+          function downloadCds() {
+            var fileName = "cds.fa";
+            var content = ">@row.geneid\n" + $("#cds").text().trim();
+            var blob = new Blob([content], {
+              type: "text/plain;charset=utf-8"
+            });
+            saveAs(blob, fileName)
+          }
+
+          function downloadPep() {
+            var fileName = "pep.fa";
+            var content = ">@row.geneid\n" + $("#pep").text().trim();
+            var blob = new Blob([content], {
+              type: "text/plain;charset=utf-8"
+            });
+            saveAs(blob, fileName)
+          }
+
+
+  </script>
+
+}
+

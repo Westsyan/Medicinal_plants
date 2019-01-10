@@ -1,0 +1,722 @@
+@home.main("") {
+    <div class="row">
+        <div class="form-group col-sm-12">
+            <h2 class="page-heading">Blast</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="bs-docs-sidebar" role="complementary">
+                <ul class="nav bs-docs-sidenav">
+                    <li class="active"><a href="#blastn" data-toggle="tab">Blastn</a></li>
+                    <li><a href="#blastp" data-toggle="tab">Blastp</a></li>
+                    <li><a href="#blastx" data-toggle="tab">Blastx</a></li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-9 tab-content myform" >
+
+            <div class="tab-pane active" id="blastn">
+                <form class="form-horizontal" method="get" id="form">
+                    <h4>Required:</h4>
+                    <hr>
+
+                    <input class="form-control" name="blastType" value="blastn" style="display: none;">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Type of query:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" onchange="change(this, 'blastn')" name="method">
+                                <option selected value="text">Text</option>
+                                <option value="file">File</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="blastnQueryContent">
+                        <label class="control-label col-sm-3">Enter FASTA sequences:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control blast-text" name="queryText" id="queryText" rows="5"></textarea>
+                            <span class="help-block">
+                                e.g.,&nbsp;<a href="#" onclick="showExample('dna', 'form')"><em id="egQuery">
+                                example</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="blastnQueryFile" style="display: none;">
+                        <label class="control-label col-sm-3">upload file:</label>
+                        <div class="col-sm-8">
+                            <input id="input-1" type="file" class="file control-label" name="file" data-show-preview="false"
+                            data-show-upload="false" accept=".fa,.fasta">
+                            <span class="help-block"><a href="/medicinalPlants/utils/downloadExample?example=blastn_example.fasta"><em id="egCrics">Example_File</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="againstType">
+                        <label class="control-label col-sm-3">Database:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="db">
+                                <option selected value="gansi/cds.fasta">Ganoderma sinense</option>
+                                <option  value="gansi/gene.fasta">Ganoderma sinense genome</option>
+                                @*<option  value="roseus/cds.fasta">Catharanthus roseus</option>
+                                <option  value="roseus/gene.fasta">Catharanthus roseus genome</option>*@
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Evalue:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="evalue" id="evalue" value="1e-5">
+                        </div>
+
+                        <label class="control-label col-sm-3">Word size:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="wordSize" id="wordSize" value="28">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Max target seqs:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="maxTargetSeqs" id="mCharacteristic" value="10">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <div class="actions col-sm-offset-3 col-sm-3">
+                            <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                            onclick="blast('form')">
+                                Search</button>
+                        </div>
+                        <div class="actions  col-sm-3">
+                            <button type="reset" class="btn btn-primary" style="width: 90%;">
+                                Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+                <!--Transcript -->
+            <div class="tab-pane" id="blastp">
+                <form class="form-horizontal" method="get" id="blastpForm">
+                    <h4>Required:</h4>
+                    <hr>
+
+                    <input class="form-control" name="blastType" value="blastp" style="display: none;">
+
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Type of query:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" onchange="change(this, 'blastp')" name="method">
+                                <option selected value="text">Text</option>
+                                <option value="file">File</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="blastpQueryContent" >
+                        <label class="control-label col-sm-3">Enter FASTA sequences:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control monospace" name="queryText" id="queryText" rows="5"></textarea>
+                            <span class="help-block">
+                                e.g.,&nbsp;<a href="#" onclick="showExample('protein', 'blastpForm')"><em id="egQuery">
+                                example</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="blastpQueryFile" style="display: none;">
+                        <label class="control-label col-sm-3">Upload file:</label>
+                        <div class="col-sm-8">
+                            <input id="input-1" type="file" class="file control-label" name="file" data-show-preview="false"
+                            data-show-upload="false">
+                            <span class="help-block"><a onclick="showExampleFile('protein')"><em>
+                                Example file</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="againstType">
+                        <label class="control-label col-sm-3">Database:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="db">
+                                <option selected value="gansi/pep.fasta">Ganoderma sinense</option>
+                               @* <option  value="roseus/pep.fasta">Catharanthus roseus</option>*@
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Evalue:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="evalue" id="evalue" value="1e-5">
+                        </div>
+
+                        <label class="control-label col-sm-3">Word size:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="wordSize" id="wordSize" value="3">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Max target seqs:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="maxTargetSeqs" id="mCharacteristic" value="10">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <div class="actions col-sm-offset-3 col-sm-3">
+                            <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                            onclick="blast('blastpForm')">
+                                Search</button>
+                        </div>
+                        <div class="actions  col-sm-3">
+                            <button type="reset" class="btn btn-primary" style="width: 90%;">
+                                Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="blastx">
+                <form class="form-horizontal" method="get" id="blastxForm">
+                    <h4>Required:</h4>
+                    <hr>
+
+                    <input class="form-control" name="blastType" value="blastx" style="display: none;">
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Type of query:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" onchange="change(this, 'blastx')" name="method">
+                                <option selected value="text">Text</option>
+                                <option value="file">File</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="blastxQueryContent" >
+                        <label class="control-label col-sm-3">Enter FASTA sequences:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control monospace" name="queryText" id="queryText" rows="5"></textarea>
+                            <span class="help-block">
+                                e.g.,&nbsp;<a href="#" onclick="showExample('dna', 'blastxForm')"><em id="egQuery">
+                                example</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="blastxQueryFile" style="display: none;">
+                        <label class="control-label col-sm-3">Upload file:</label>
+                        <div class="col-sm-8">
+                            <input id="input-1" type="file" class="file control-label" name="file" data-show-preview="false"
+                            data-show-upload="false">
+                            <span class="help-block"><a onclick="showExampleFile('dna')"><em>
+                                Example file</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="againstType">
+                        <label class="control-label col-sm-3">Against type:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="db">
+                                <option selected value="gansi/pep.fasta">Ganoderma sinense</option>
+                                <option  value="gansi/gene.fasta">Ganoderma sinense genome</option>
+                               @* <option  value="roseus/pep.fasta">Catharanthus roseus</option>
+                                <option  value="roseus/gene.fasta">Catharanthus roseus genome</option>*@
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Evalue:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="evalue" id="evalue" value="1e-5">
+                        </div>
+
+                        <label class="control-label col-sm-3">Word size:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="wordSize" id="wordSize" value="3">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Max target seqs:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="maxTargetSeqs" id="mCharacteristic" value="10">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <div class="actions col-sm-offset-3 col-sm-3">
+                            <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                            onclick="blast('blastxForm')">
+                                Search</button>
+                        </div>
+                        <div class="actions  col-sm-3">
+                            <button type="reset" class="btn btn-primary" style="width: 90%;">
+                                Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="tblastn">
+                <form class="form-horizontal" method="get" id="tblastnForm">
+                    <h4>Required:</h4>
+                    <hr>
+                    <div class="form-group" >
+                        <label class="control-label col-sm-3">Enter FASTA sequences:</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control monospace" name="queryText" id="queryText" rows="5"></textarea>
+                            <span class="help-block">
+                                e.g.,&nbsp;<a href="#" onclick="showExample('protein', 'tblastnForm')"><em id="egQuery">
+                                example</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Or, upload file:</label>
+                        <div class="col-sm-8">
+                            <input id="input-1" type="file" class="file control-label" name="file" data-show-preview="false"
+                            data-show-upload="false">
+                            <span class="help-block"><a onclick="showExampleFile('protein')"><em>
+                                Example file</em></a></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="againstType">
+                        <label class="control-label col-sm-3">Against type:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="againstType">
+                                <option selected value="gene">gene</option>
+                                <option value="genome">genome</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Evalue:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="evalue" id="evalue" value="1e-5">
+                        </div>
+
+                        <label class="control-label col-sm-3">Word size:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="wordSize" id="wordSize" value="3">
+                        </div>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Max target seqs:</label>
+                        <div class="col-sm-2">
+                            <input class="form-control" name="maxTargetSeqs" id="mCharacteristic" value="10">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <div class="actions col-sm-offset-3 col-sm-3">
+                            <button type="button" class="btn btn-primary" style="width: 90%;" id="search"
+                            onclick="blast('tblastnForm')">
+                                Search</button>
+                        </div>
+                        <div class="actions  col-sm-3">
+                            <button type="reset" class="btn btn-primary" style="width: 90%;">
+                                Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="result" style="display: none">
+        <hr>
+        <h4 style="color: black">Result:</h4>
+        <button class="btn btn-primary down" onclick="downloadExcel()">Download</button>
+        <iframe id="frame"  style="width: 1200px;" height="1000px" frameborder="0" align="middle">
+
+
+
+        </iframe>
+
+    </div>
+
+    <script>
+
+            var excel = "";
+
+
+            var dnaSeq = ">GanSi1.6scf_1_ctg_1\t1\t246093\n" +
+                    "TGTGCGTGCGCATCGAAGGTGGAATTGGAACAGGTGGATCGCGTTCAGCAGGTCTCTGGCGTGATTGTGGAAGTGATCGGGTATAACTAGGTCCGGGAACCTGTTCATCCCTTGATGGAGGTGCAGTCCGAGAGCGACTCGGTTTCTCACCAACCATTTGCTTCCACGATCCCCGTTTCTCAATGTCCTTAGAAATGTCTGTAGGGTGTCGTGATTCACCATAGACATTGCCTTCGCGAACTGGTACTTTCCGCTCTCTCGCAGACCGTCACGGTTCTTCCGTGCCTGGCCTGTCAACCGGGGGAGGTTGCGGCGGCATAGGGTGTTGCACTTCTGGTATGTCCTCTCTGTGCTGTGCGCGAGGTTGAGGAGGTACAGGGGGTACAGCCAGAGCTGGTGCAGGTGCGACGTCTCGCGCCTTACCCTTGCCCTTTGTGGAAGGTTTTGTGGGAGGACGGCGTGGCTCATCGCCGTCATCAGGGAGTAAAGAAGGAGTAGTTGCCTGGTCCACAGGTTCAACTGGTTCGGGCGCACTCTGCTGCCCTTGTCGCTTCTTTTCATGTGAGCATTTTGGAAACAAACTTTCATCAAATAACGCTTGTGCAGCAGTAAAGATGACATTGTTTGGCAAGCGCATAAACTTATGATTGTGGTTACCGGCACCGACACCAAGATAAATCATCAGCTCCGACTTGGGCGATAATTTGTTCTTGCGAACTTTGGGTGGCAAAAAGACATATGCTCCACAGCCGAAAACGCGTAGGTGACTGATGTCTGGCTTGGTACCATTCAAAAGTTCGTATGGCGTCCGCCATTCAAGGCGGCGCGTGGGGGTCCTGTTGTGCAGGTGCGCTGCGTGTTCGAAGGAGAATTCCCACCAAGATTGAGGGATGCAGGCATCATGCCGCATGGCCTCACTCTTGTCCATGAGCGTACGAATGATTCGCTCTGCGCGGCCATTCTGTTGATGAATATGAGGCGCGCTAGGAATGATCTCGATGCCTTTGTCTTTGAGCATGT";
+            var proteinSeq = ">GS00001\n" +
+                    "MARGSLLSLILLVVVASTDRLHSRRAPAAFCQPPSKAVDHVDPLIGNGGYSPNGSGGMIP\n" +
+                    ">GS00002\n" +
+                    "MRHLHRLPYTVQPAGNVERHEHQRYASSFFSHSSSVALFASAASTASSSSASASASGSAS";
+            $(function () {
+
+                formValidation()
+            });
+
+
+            function change(element, t) {
+                var value = $(element).find(">option:selected").val();
+                if (value == "text") {
+                    $(".fileinput-remove-button").click();
+                    $("#" + t + "QueryContent").show();
+                    $("#" + t + "QueryFile").hide()
+                } else {
+                    $(".blast-text").val("");
+                    $("#" + t + "QueryContent").hide();
+                    $("#" + t + "QueryFile").show()
+                }
+            }
+
+            function downloadExcel() {
+                var fileName = "blast.xls";
+                var content = excel;
+                var blob = new Blob([content], {
+                    type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+                });
+                saveAs(blob, fileName)
+            }
+
+            function showExample(type, formId) {
+                var seq = dnaSeq;
+                if (type == "protein") {
+                    seq = proteinSeq
+                }
+                $("#" + formId + " #queryText").val(seq);
+                $("#" + formId).formValidation("revalidateField", "queryText")
+            }
+
+            function inputCheck(formId) {
+                var file = $("#" + formId + " #queryText").val();
+                var text = $("#" + formId + " #input-1").val();
+                var b = true;
+                if (!file && !text) {
+                    b = false;
+                    swal("Error", "If you don't upload  sequences as a file, please paste sequences!", "error")
+                } else if (file && text) {
+                    b = false;
+                    swal("Error", "Please either enter sequences into the box or upload a file, not both!", "error")
+                }
+                return b
+            }
+
+            function blast(formId) {
+                var form = $("#" + formId)
+                var fv = form.data("formValidation");
+                fv.validate();
+                if (fv.isValid() && inputCheck(formId)) {
+                    var form1 = new FormData($("#" + formId)[0]);
+                    var element = "<div id='content'><span id='info'>Query...</span>&nbsp;<img class='runningImage' src='/assets/images/running2.gif' style='width: 30px;height: 20px;'></div>"
+                    var index = layer.alert(element, {
+                        skin: 'layui-layer-molv'
+                        , closeBtn: 0,
+                        title: "Info",
+                        btn: []
+                    });
+                    $.ajax({
+                        url: "@routes.ToolsController.blastRun()",
+                        type: "post",
+                        processData: false,
+                        contentType: false,
+                        data: form1,
+                        success: function (data) {
+                            layer.close(index);
+                            if (data.valid == "false") {
+                                swal("Error", data.message, "error");
+                                $("#result").hide()
+                            } else {
+                                $("#frame").attr("src","/medicinalPlants/tools/blastResultBefore?path=" + data.html);
+                                excel = data.excel;
+                                $("#result").show()
+                            }
+                        }
+                    });
+                }
+            }
+
+            function formValidation() {
+                var infinityNumber = Number.MAX_VALUE;
+                $('#form').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        file: {
+                            validators: {
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                between: {
+                                    min: "4",
+                                    max: infinityNumber,
+                                    message: "Word size must greater than or equal to 4！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                    }
+                });
+
+                $('#blastpForm').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        file: {
+                            validators: {
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: 8,
+                                    inclusive: false,
+                                    message: "Word size must less than  8！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                    }
+                });
+
+                $('#blastxForm').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        file: {
+                            validators: {
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: 8,
+                                    inclusive: false,
+                                    message: "Word size must less than  8！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                    }
+                });
+
+                $('#tblastnForm').formValidation({
+                    framework: 'bootstrap',
+                    icon: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+                        file: {
+                            validators: {
+                                file: {
+                                    extension: 'fa,fasta',
+                                    message: 'Query file must is a fasta file！'
+                                }
+                            }
+                        },
+                        evalue: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Evalue is required！'
+                                },
+                                numeric: {
+                                    message: 'Evalue must be number！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Evalue must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                        wordSize: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Word size is required！'
+                                },
+                                integer: {
+                                    message: 'Word size must be intger！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: 8,
+                                    inclusive: false,
+                                    message: "Word size must less than  8！"
+                                }
+                            }
+                        },
+                        maxTargetSeqs: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'Max target seqs is required！'
+                                },
+                                integer: {
+                                    message: 'Max target seqs must be integer！'
+                                },
+                                between: {
+                                    min: "0",
+                                    max: infinityNumber,
+                                    message: "Max target seqs must greater than or equal to 0！"
+                                }
+                            }
+                        },
+                    }
+                });
+            }
+
+            $("#input-1").fileinput({
+                showPreview: false
+            });
+
+    </script>
+
+
+    </div>
+}

@@ -1,0 +1,141 @@
+@main("Medicinal Plantgenome resource database") {
+
+    <style>
+            .thumbnail {
+                height: 200px;
+            }
+
+            .thumbnail > .row {
+                margin-top: 12px;
+            }
+
+        .index-text{
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+
+    </style>
+    <div class="row">
+        <div class="col-md-9">
+
+
+                <div class="index-text">
+
+                    <p class="text-justify">
+                        Medicinal plants , also called medicinal herbs , have been discovered and used in traditional medicine practices since prehistoric times.
+                        Plants synthesise hundreds of chemical compounds for functions including defence against insects , fungi , diseases , and herbivorous mammals .
+                        Numerous phytochemicals with potential or established biological activity have been identified.
+                        However, since a single plant contains widely diverse phytochemicals, the effects of using a whole plant as medicine are uncertain.
+                        Further, the phytochemical content and pharmacological actions, if any, of many plants having medicinal potential remain unassessed by rigorous scientific research to define efficacy and safety.
+                        In the United States over the period 1999 to 2012, despite several hundred applications for new drug status , only two botanical drug candidates had sufficient evidence of medicinal value to be approved by the Food and Drug Administration .
+                    </p>
+
+
+                </div>
+
+            <div class="row" style="">
+
+                <form method="post" action="" class="form-inline"
+                autocomplete="off" target="_blank">
+                    <div class="input-group" style="width: 80%;
+                        margin-left: 15px">
+                        <input type="text" name="geneId" class="form-control"
+                        placeholder="e.g.Mar00001,Mar00002" id="geneId" style="height: auto"/>
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit"
+                            style="border-top-right-radius: 4px;
+                                border-bottom-right-radius: 4px;background-color: #779C2D;">Search</button>
+                        </span>
+                    </div>
+                </form>
+
+            </div>
+
+
+            <div class="panel panel-default" style="margin-top: 15px;">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-database"></i> Resources</h3>
+
+
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="@routes.Assets.at("images/plants01.png")"  class="index-icon">
+                                        <a href="" target="_blank" class="btn btn-success btn-jump" role="button"><i class="fa fa-hand-o-right"></i>
+                                            View</a>
+                                    </div>
+                                    <div class="col-sm-6" style="margin-left: -25px">
+                                        <h3>Download</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="@routes.Assets.at("images/plants02.png")" class="index-icon">
+                                        <a href="" target="_blank" class="btn btn-success btn-jump" role="button"><i class="fa fa-hand-o-right"></i>
+                                            View</a>
+                                    </div>
+                                    <div class="col-sm-6" style="margin-left: -25px">
+                                        <h3>List of Participants</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="thumbnail">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <img src="@routes.Assets.at("images/plants03.png")"  class="index-icon">
+                                        <a href="" target="_blank" class="btn btn-success btn-jump" role="button"><i class="fa fa-hand-o-right"></i>
+                                            View</a>
+                                    </div>
+                                    <div class="col-sm-6" style="margin-left: -25px">
+                                        <h3>Objectives</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <div align="center" style="margin-top: 20px">
+                <a href="#" target="_blank"
+                style="text-align: center">
+                    <img src="@routes.Assets.at("images/shucai.jpg")" width="95%" style="margin-bottom: 20px">
+                </a>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-bookmark"></i> Release Notes</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-chevron-circle-right"></i>
+                            Medicinal plants database is available online on November 2018.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+}

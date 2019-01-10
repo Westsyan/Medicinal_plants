@@ -1,0 +1,49 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET         /                                                  controllers.HomeController.home
+
+GET         /medicinalPlants/download/downloadBefore           controllers.HomeController.downloadBefore
+GET         /medicinalPlants/download/download                 controllers.HomeController.download(name:String,species:String)
+
+GET         /medicinalPlants/species/insertGansi               controllers.SpeciesController.insertGansi
+GET         /medicinalPlants/species/insertRoseus              controllers.SpeciesController.insertRoseus
+
+POST        /medicinalPlants/species/getAllGansi               controllers.SpeciesController.getAllGansi
+POST        /medicinalPlants/species/getAllRoseus              controllers.SpeciesController.getAllRoseus
+
+
+GET         /medicinalPlants/tools/blastResultBefore            controllers.ToolsController.blastResultBefore(path:String)
+POST        /medicinalPlants/tools/blastResult                  controllers.ToolsController.blastResult(path:String)
+GET        /medicinalPlants/tools/blastResult                  controllers.ToolsController.blastResult(path:String)
+
+
+GET         /medicinalPlants/plants/gansiBefore                controllers.PlantsController.gansiBefore
+GET         /medicinalPlants/plants/catharanthusBefore         controllers.PlantsController.catharanthusBefore
+
+
+GET         /medicinalPlants/tools/blastBefore                 controllers.ToolsController.blastBefore
+POST        /medicinalPlants/tools/blastRun                    controllers.ToolsController.blastRun
+GET         /medicinalPlants/tools/searchFunctionBefore        controllers.ToolsController.searchFunctionBefore
+POST        /medicinalPlants/tools/searchFunction              controllers.ToolsController.searchFunction
+GET         /medicinalPlants/tools/searchBefore                controllers.ToolsController.searchBefore
+POST        /medicinalPlants/tools/searchById                  controllers.ToolsController.searchById
+POST        /medicinalPlants/tools/searchByRegion              controllers.ToolsController.searchByRegion
+
+GET         /medicinalPlants/tools/seqFetchBefore              controllers.ToolsController.seqFetchBefore
+POST        /medicinalPlants/tools/seqRegion                   controllers.ToolsController.seqRegion
+
+GET         /medicinalPlants/tools/getAllChr                   controllers.ToolsController.getAllChr
+GET         /medicinalPlants/tools/getAllGeneId                controllers.ToolsController.getAllGeneId
+
+GET         /medicinalPlants/tools/geneInfo                    controllers.ToolsController.geneInfo(id:String,species:String)
+
+
+
+
+GET         /medicinalPlants/utils/downloadExample             controllers.UtilsController.downloadExample(example:String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                                      controllers.Assets.at(path="/public", file)
